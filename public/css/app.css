@@ -1,0 +1,61 @@
+@import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@100,200;400;700&display=swap);
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Some additional flair why not */
+body.search {
+    background: linear-gradient(45deg, #ff595e, #ff924c, #ffca3a, #8ac926, #1982c4, #6a4c93);
+    background-size: 600% 100%;
+    -webkit-animation: gradient 20s linear infinite;
+            animation: gradient 20s linear infinite;
+    -webkit-animation-direction: alternate;
+            animation-direction: alternate;
+}
+
+@-webkit-keyframes gradient {
+    0% {background-position: 0%}
+    100% {background-position: 100%}
+}
+
+@keyframes gradient {
+    0% {background-position: 0%}
+    100% {background-position: 100%}
+}
+
+img.tiny-poster {
+    width: 185px;
+    padding: 5px;
+}
+
+body.movie
+{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+    background-blend-mode: darken;
+    color: #fff;
+}
+
+h1.movie-title {
+    font-weight: 200;
+    text-transform: uppercase;
+}
+
+ul.movie-cast {
+    list-style: none;
+    padding: 0;
+}
+
+img.movie-poster {
+    width: 400px;
+    height: auto;
+}
+
+p.movie-overview {
+    font-weight: 400;
+    margin-top: 20px;
+}
+
