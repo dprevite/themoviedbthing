@@ -12,7 +12,7 @@
 
     <span class="col">
       <h1 class="movie-title">{{ $movie->original_title }}</h1>
-      <span class="badge rounded-pill bg-light text-dark">Released {{ $movie->release_date }}</span>
+      <span class="badge rounded-pill bg-light text-dark">Released {{ date('d-m-Y', strtotime($movie->release_date)) }}</span>
       <span class="badge rounded-pill bg-light text-dark">
         @if (isset($movie->runtime))
           Runtime: {{ intdiv($movie->runtime, 60) . ':' . sprintf('%02d', $movie->runtime % 60) }}
