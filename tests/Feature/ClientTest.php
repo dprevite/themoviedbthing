@@ -35,7 +35,7 @@ class ClientTest extends TestCase
         Http::preventStrayRequests();
 
         Http::fake([
-            TheMovieDatabase::BASE_URL . 'movie/453395/credits?api_key=1111' => $this->get_mock_response('movie_cast.json')
+            TheMovieDatabase::BASE_URL . 'movie/453395/credits?api_key=1111' => $this->get_mock_response('movie_cast.json'),
         ]);
 
         $client = new TheMovieDatabase();
@@ -53,16 +53,16 @@ class ClientTest extends TestCase
         Http::preventStrayRequests();
 
         Http::fake([
-            TheMovieDatabase::BASE_URL . 'search/movie?query=Doctor%20Strange%20in%20the%20Multiverse%20of%20Madness&api_key=1111' => $this->get_mock_response('movie.json'),
-            TheMovieDatabase::BASE_URL . 'movie/453395/credits?api_key=1111' => $this->get_mock_response('movie_cast.json')
-
+            TheMovieDatabase::BASE_URL . 'search/movie?query=Doctor%20Strange%20in%20the%20Multiverse%20of%20Madness&api_key=1111' => $this->get_mock_response('movies.json'),
+            TheMovieDatabase::BASE_URL . 'movie/453395?api_key=1111' => $this->get_mock_response('movie.json'),
+            TheMovieDatabase::BASE_URL . 'movie/453395/credits?api_key=1111' => $this->get_mock_response('movie_cast.json'),
         ]);
 
         $client = new TheMovieDatabase();
 
         $movie = $client->findMatchingMovie('Doctor Strange in the Multiverse of Madness');
 
-        Http::assertSentCount(2);
+        Http::assertSentCount(3);
 
         $this->assertTrue($movie->original_title === 'Doctor Strange in the Multiverse of Madness');
         $this->assertTrue($movie->poster_path === '/9Gtg2DzBhmYamXBS1hKAhiwbBKS.jpg');
@@ -75,7 +75,7 @@ class ClientTest extends TestCase
         Http::preventStrayRequests();
 
         Http::fake([
-            TheMovieDatabase::BASE_URL . 'search/movie?query=thismoviedoesntexist&api_key=1111' => $this->get_mock_response('movie_doesnt_exist.json')
+            TheMovieDatabase::BASE_URL . 'search/movie?query=thismoviedoesntexist&api_key=1111' => $this->get_mock_response('movie_doesnt_exist.json'),
         ]);
 
         $client = new TheMovieDatabase();
