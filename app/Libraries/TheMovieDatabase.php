@@ -6,67 +6,42 @@ use Illuminate\Support\Facades\Http;
 
 class TheMovieDatabase {
 
+    const BASE_URL = 'https://api.themoviedb.org/3/';
+
     public function findMatchingMovie(string $query)
     {
-        try {
-            $response = Http::get('https://api.themoviedb.org/3/search/movie', [
-                'api_key' => config('themoviedb.api_key'),
-                'query'   => $query,
-            ]);
+        $result = $this->get('search/movie', [
+            'query' => $query,
+        ])[0];
 
-            if (!$response->successful()) {
-                throw new \Exception('Could not find matching movie');
-            }
-
-            $result = $response->json()['results'][0] ?? [];
-        } catch (\Exception $e) {
-            return null;
-        }
-
-        $result['cast'] = $this->findMovieCast($result);
+        $result['cast'] = $this->findMovieCast($result['id']);
 
         return (object)$result;
     }
 
-
-    public function findMovieCast(array $movie)
+    public function findMovieCast(int $movieId)
     {
-        try {
-            $response = Http::get('https://api.themoviedb.org/3/movie/' . $movie['id'] . '/credits', [
-                'api_key' => config('themoviedb.api_key'),
-            ]);
+        $result = $this->get('movie/' . $movieId . '/credits', [], 'cast');
 
-            if (!$response->successful()) {
-                throw new \Exception('Could not find movie cast');
-            }
-
-            $result = collect($response->json()['cast']) ?? null;
-        } catch (\Exception $e) {
-            return null;
-        }
-
-        #var_dump($result); exit;
-
-        return $result;
+        return collect($result);
     }
-
 
     public function getNowPlaying() {
-        try {
-            $response = Http::get('https://api.themoviedb.org/3/movie/now_playing', [
-                'api_key' => config('themoviedb.api_key'),
-            ]);
+        $result = $this->get('movie/now_playing');
 
-            if (!$response->successful()) {
-                throw new \Exception('Could not find now playing movies');
-            }
-
-            return collect($response->json()['results'])->take(5);
-        } catch (\Exception $e) {
-            return null;
-        }
+        return collect($result)->take(5);
     }
 
+    private function get(string $url, array $params = [], string $results = 'results') {
+        $response = Http::get(self::BASE_URL . $url, array_merge($params, [
+            'api_key' => config('themoviedb.api_key'),
+        ]));
 
+        if (!$response->successful()) {
+            throw new \Exception('Failure to get data from TheMovieDatabase.');
+        }
+
+        return collect($response->json()[$results]);
+    }
 
 }
