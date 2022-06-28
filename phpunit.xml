@@ -27,5 +27,7 @@
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
+        <env name="MOVIEDB_API_KEY" value="1111"/>
+        <env name="MOVIEDB_READ_ACCESS_TOKEN" value="1111"/>
     </php>
 </phpunit>

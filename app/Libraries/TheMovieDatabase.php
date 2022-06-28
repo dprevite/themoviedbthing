@@ -37,7 +37,7 @@ class TheMovieDatabase {
         return collect($result)->take(5);
     }
 
-    private function get(string $url, array $params = [], string $results = 'results') {
+    private function get(string $url, array $params = [], string $resultsProperty = 'results') {
         $response = Http::get(self::BASE_URL . $url, array_merge($params, [
             'api_key' => config('themoviedb.api_key'),
         ]));
@@ -46,7 +46,7 @@ class TheMovieDatabase {
             throw new \Exception('Failure to get data from TheMovieDatabase.');
         }
 
-        return collect($response->json()[$results]);
+        return collect($response->json()[$resultsProperty]);
     }
 
 }
