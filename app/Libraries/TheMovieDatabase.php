@@ -12,8 +12,13 @@ class TheMovieDatabase {
     {
         $result = $this->get('search/movie', [
             'query' => $query,
-        ])[0];
+        ]);
 
+        if (!isset($result[0])) {
+            throw new \Exception('Could not find any matching movie');
+        }
+
+        $result = $result[0];
         $result['cast'] = $this->findMovieCast($result['id']);
 
         return (object)$result;

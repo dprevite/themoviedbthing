@@ -7,6 +7,15 @@
     <div class="container">
       <div class="row">
         <div class="col">
+          @if ($errors->any())
+            <div class="alert alert-danger">
+              <ul>
+                @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
+          @endif
           <p>Enter the name of a movie to look it up.</p>
           <div class="input-group mb-3">
             <input type="text" name="query" class="form-control form-control-lg col-6" placeholder="Doctor Strange" tabindex="0" autofocus>

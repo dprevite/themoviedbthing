@@ -8,16 +8,12 @@ use Illuminate\Http\Request;
 class MovieController extends Controller
 {
 
-    protected $client;
-
     public function show(Request $request, TheMovieDatabase $client)
     {
-        $this->client = $client;
-
-        $movie = $client->findMatchingMovie($request->input('query'));
-
-        if ($movie == null) {
-            return redirect('/')->withErrors('Could not find any matching movie');
+        try {
+            $movie = $client->findMatchingMovie($request->input('query'));
+        } catch (\Exception $e) {
+            return redirect('/')->withErrors($e->getMessage());
         }
 
         return view('movie', [
