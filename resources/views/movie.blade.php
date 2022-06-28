@@ -15,7 +15,7 @@
       <span class="badge rounded-pill bg-light text-dark">Released {{ $movie->release_date }}</span>
       <span class="badge rounded-pill bg-light text-dark">
         @if (isset($movie->runtime))
-          Runtime: {{ intdiv($movie->runtime, 60) . ':' . ($movie->runtime % 60) }}
+          Runtime: {{ intdiv($movie->runtime, 60) . ':' . sprintf('%02d', $movie->runtime % 60) }}
         @else
           Runtime: Unknown
         @endif
