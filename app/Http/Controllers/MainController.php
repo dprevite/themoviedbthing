@@ -9,7 +9,11 @@ class MainController extends Controller
 
     public function showSearchForm(TheMovieDatabase $client)
     {
-        $nowPlaying = $client->getNowPlaying();
+        try {
+            $nowPlaying = $client->getNowPlaying();
+        } catch (\Exception $e) {
+            $nowPlaying = null;
+        }
 
         return view('search_form', [
             'nowPlaying' => $nowPlaying,

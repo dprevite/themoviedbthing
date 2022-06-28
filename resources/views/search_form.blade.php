@@ -13,12 +13,14 @@
             <button class="btn btn-primary" type="submit" tabindex="1">Search</button>
           </div>
 
-          <div class="text-center">
-          Or try something currently playing:
-          </div>
-          @foreach ($nowPlaying as $movie)
-            <a href="/movie?query={{ urlencode($movie['original_title']) }}"><img src="https://image.tmdb.org/t/p/w185/{{ $movie['poster_path'] }}" alt="{{ $movie['original_title'] }} poster" class="tiny-poster"></a>
-          @endforeach
+          @if ($nowPlaying !== null)
+            <div class="text-center">
+              Or try something currently playing:
+            </div>
+            @foreach ($nowPlaying as $movie)
+              <a href="/movie?query={{ urlencode($movie['original_title']) }}"><img src="https://image.tmdb.org/t/p/w185/{{ $movie['poster_path'] }}" alt="{{ $movie['original_title'] }} poster" class="tiny-poster"></a>
+            @endforeach
+          @endif
         </div>
       </div>
     </div>
